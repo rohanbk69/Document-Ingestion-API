@@ -21,17 +21,18 @@ Base.metadata.create_all(engine)
 
 # Save Metadata 
 
-def save_metadata(
-    filename,
-    strategy,
-    total_chunks
-):
+def save_metadata(filename,strategy,total_chunks):
     session=Session()
-    data=DocumentMetadata(
-        filename=filename,
-        chunking_strategy=strategy,
-        total_chunks=total_chunks
-    )
-    session.add(data)
-    session.commit()
-    session.close()
+    try:
+        data=DocumentMetadata(
+            filename=filename,
+            chunking_strategy=strategy,
+            total_chunks=total_chunks
+        )
+        session.add(data)
+        session.commit()
+    except Exception as e:
+        session.rollback()
+        print('Error:',e)
+    finally:
+        session.close()

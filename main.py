@@ -28,16 +28,19 @@ async def upload_document(
         shutil.copyfileobj(file.file,buffer)
         
     if file.filename.endswith('.pdf'):
-        text=load_pdf(path)
+        docs=load_pdf(path)
+        
+    elif file.filename.endswith('.txt'):
+        docs=load_txt(path)
         
     else:
-        text=load_txt(path)
+        return {'error':'Only PDF and TXT supported'}
         
     if strategy=='semantic':
-        chunks=semantic_chunk(text)
+        chunks=semantic_chunk(docs)
         
     else:
-        chunks=recursive_chunk(text)
+        chunks=recursive_chunk(docs)
         
     texts=[
         chunk.page_content for chunk in chunks

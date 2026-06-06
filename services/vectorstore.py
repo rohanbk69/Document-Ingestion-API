@@ -28,14 +28,18 @@ def store_vectors(chunks,embeddings):
     points=[]
     
     for chunk,vector in zip(chunks,embeddings):
+        
+        chunk_id=str(uuid.uuid4())
+        
         points.append(
             PointStruct(
-                id=str(uuid.uuid4()),
+                id=chunk_id,
                 vector=vector,
                 payload={
+                    'chunk_id':chunk_id,
                     'text':chunk.page_content,
-                    'chunk_id':str(uuid.uuid4()),
-                    'source':'uploaded_file'
+                    'source':chunk.metadata.get('source'),
+                    'page':chunk.metadata.get('page')
                 }
             )
         )
