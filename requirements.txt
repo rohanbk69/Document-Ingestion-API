@@ -1,0 +1,15 @@
+langchain
+langchain-community
+langchain-core
+langchain-text-splitters
+langchain-experimental
+langchain-classic
+langchain-ollama
+langchain-huggingface
+pypdf
+sentence-transformers
+fastapi
+uvicorn
+sqlalchemy
+qdrant-client
+python-multipart
